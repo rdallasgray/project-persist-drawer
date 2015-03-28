@@ -10,17 +10,17 @@
 (defun project-persist-drawer--no-adaptor ()
   (message "project-persist-drawer: no adaptor loaded"))
 
-(defun project-persist-drawer-get-window ()
-  (project-persist-drawer--no-adaptor))
+;; (defun project-persist-drawer-get-window ()
+;;   (project-persist-drawer--no-adaptor))
 
-(defun project-persist-drawer-open (dir)
-  (project-persist-drawer--no-adaptor))
+;; (defun project-persist-drawer-open (dir)
+;;   (project-persist-drawer--no-adaptor))
 
-(defun project-persist-drawer-before-open (dir)
-  (project-persist-drawer--no-adaptor))
+;; (defun project-persist-drawer-before-open (dir)
+;;   (project-persist-drawer--no-adaptor))
 
-(defun project-persist-drawer-after-open (dir)
-  (project-persist-drawer--no-adaptor))
+;; (defun project-persist-drawer-after-open (dir)
+;;   (project-persist-drawer--no-adaptor))
 
 (defun project-persist-drawer--do-open ()
   (let ((project-root project-persist-current-project-root-dir))
@@ -31,12 +31,12 @@
 
 (defun project-persist-drawer-on ()
   (eval-after-load 'project-persist
-    (progn
-      (add-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open))))
+    '(progn
+       (add-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open))))
 
 (defun project-persist-drawer-off ()
   (eval-after-load 'project-persist
-    (progn
-      (remove-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open))))
+    '(progn
+       (remove-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open))))
 
 (provide 'project-persist-drawer)
