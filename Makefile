@@ -1,8 +1,2 @@
-PROJECT_LCNAME=pallet
+PROJECT_LCNAME=project-persist-drawer
 include el.mk/el.mk
-
-servant-start:
-	@cask exec servant start --path "test" &
-
-test: servant-start
-	@cask exec ert-runner; status=$$?; cask exec servant stop --path "test"; exit $$status
