@@ -74,14 +74,12 @@
 (defun project-persist-drawer-on ()
   "Turn on the project-persist drawer."
   (eval-after-load 'project-persist
-    '(progn
-       (add-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open))))
+    '(add-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open)))
 
 (defun project-persist-drawer-off ()
   "Turn off the project-persist drawer."
   (eval-after-load 'project-persist
-    '(progn
-       (remove-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open))))
+    '(remove-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open)))
 
 (provide 'project-persist-drawer)
 ;;; project-persist-drawer.el ends here
