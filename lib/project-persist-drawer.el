@@ -68,46 +68,70 @@
     (project-persist-drawer-off)))
 
 (defun project-persist-drawer--no-adaptor ()
-  (message "project-persist-drawer: no adaptor loaded"))
+  (message "project-persist-drawer: no adaptor loaded, \
+or adaptor does not provide this function"))
 
 ;; Adaptor interface
 
-(defun project-persist-drawer-get-window ()
+(defun project-persist-drawer--get-window ()
   "Return the window associated with the project drawer."
   (project-persist-drawer--no-adaptor))
 
-(defun project-persist-drawer-open (dir)
-  "Open the project drawer."
-  (project-persist-drawer--no-adaptor))
-
-(defun project-persist-drawer-before-open (dir)
+(defun project-persist-drawer--before-open (dir)
   "Function run before the drawer is opened."
   (project-persist-drawer--no-adaptor))
 
-(defun project-persist-drawer-after-open (dir)
+(defun project-persist-drawer--open (dir)
+  "Open the project drawer."
+  (project-persist-drawer--no-adaptor))
+
+(defun project-persist-drawer--after-open (dir)
   "Function run after the drawer is opened."
+  (project-persist-drawer--no-adaptor))
+
+(defun project-persist-drawer--before-close ()
+  "Function run before the drawer is closed."
+  (project-persist-drawer--no-adaptor))
+
+(defun project-persist-drawer--close ()
+  "Close the project drawer."
+  (project-persist-drawer--no-adaptor))
+
+(defun project-persist-drawer--after-close ()
+  "Function run after the drawer is closed."
   (project-persist-drawer--no-adaptor))
 
 ;;;
 
-(defun project-persist-drawer--do-open ()
+(defun project-persist-drawer-open ()
+  (interactive)
   (let ((project-root project-persist-current-project-root-dir))
     (setq default-directory project-root)
-    (project-persist-drawer-before-open project-root)
-    (project-persist-drawer-open project-root)
-    (project-persist-drawer-after-open project-root)))
+    (project-persist-drawer--before-open project-root)
+    (project-persist-drawer--open project-root)
+    (project-persist-drawer--after-open project-root)))
+
+(defun project-persist-drawer-close ()
+  (interactive)
+    (project-persist-drawer--before-close)
+    (project-persist-drawer--close)
+    (project-persist-drawer--after-close))
+
+(defun project-persist-drawer-toggle ()
+  (interactive)
+  (if (project-persist-drawer--get-window)
+      (project-persist-drawer-close)
+    (project-persist-drawer-open)))
 
 (defun project-persist-drawer-on ()
   "Turn on the project-persist drawer."
   (eval-after-load 'project-persist
-    '(progn
-       (add-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open))))
+    '(add-hook 'project-persist-after-load-hook 'project-persist-drawer-open)))
 
 (defun project-persist-drawer-off ()
   "Turn off the project-persist drawer."
   (eval-after-load 'project-persist
-    '(progn
-       (remove-hook 'project-persist-after-load-hook 'project-persist-drawer--do-open))))
+    '(remove-hook 'project-persist-after-load-hook 'project-persist-drawer-open)))
 
 (provide 'project-persist-drawer)
 ;;; project-persist-drawer.el ends here
