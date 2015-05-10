@@ -14,6 +14,14 @@
 ;; #project-persist-drawer
 ;; Use a project drawer with [project-persist](https://github.com/rdallasgray/project-persist).
 ;; 
+;; ## Usage
+;; In your Emacs configuration:
+;; ```elisp
+;; (require 'project-persist-drawer)
+;; (require 'project-persist-drawer-adaptor-sr-speedbar) ;; or another adaptor
+;; (project-persist-drawer-mode t)
+;; ```
+;; 
 ;; ## Adaptors
 ;; At present only one adaptor is available --
 ;; [project-persist-drawer-adaptor-sr-speedbar](https://github.com/rdallasgray/project-persist-drawer-adaptor-sr-speedbar),
@@ -24,17 +32,14 @@
 ;; ```elisp
 ;; (eval-after-load 'project-persist-drawer
 ;;   '(progn
-;;     (defun project-persist-drawer-get-window ()
+;;     (defun project-persist-drawer--get-window ()
 ;;       "Return the window associated with the project drawer.")
 ;; 
-;;     (defun project-persist-drawer-open (dir)
+;;     (defun project-persist-drawer--open (dir)
 ;;       "Open the project drawer in DIR.")
 ;; 
-;;     (defun project-persist-drawer-before-open (dir)
-;;       "Function run before the drawer is opened in DIR.")
-;; 
-;;     (defun project-persist-drawer-after-open (dir)
-;;       "Function run after the drawer is opened in DIR.")))
+;;     (defun project-persist-drawer--close ()
+;;       "Close the project drawer.")))
 ;; ```
 ;; 
 ;; The function declarations should be wrapped in an `eval-after-load` block to ensure project-persist-drawer is loaded first.
@@ -68,6 +73,7 @@
     (project-persist-drawer-off)))
 
 (defun project-persist-drawer--no-adaptor ()
+  "Stub adaptor function."
   (message "project-persist-drawer: no adaptor loaded, \
 or adaptor does not provide this function"))
 
@@ -77,59 +83,50 @@ or adaptor does not provide this function"))
   "Return the window associated with the project drawer."
   (project-persist-drawer--no-adaptor))
 
-(defun project-persist-drawer--before-open (dir)
-  "Function run before the drawer is opened."
-  (project-persist-drawer--no-adaptor))
-
 (defun project-persist-drawer--open (dir)
-  "Open the project drawer."
-  (project-persist-drawer--no-adaptor))
-
-(defun project-persist-drawer--after-open (dir)
-  "Function run after the drawer is opened."
-  (project-persist-drawer--no-adaptor))
-
-(defun project-persist-drawer--before-close ()
-  "Function run before the drawer is closed."
+  "Open the project drawer in DIR."
   (project-persist-drawer--no-adaptor))
 
 (defun project-persist-drawer--close ()
   "Close the project drawer."
   (project-persist-drawer--no-adaptor))
 
-(defun project-persist-drawer--after-close ()
-  "Function run after the drawer is closed."
-  (project-persist-drawer--no-adaptor))
-
 ;;;
 
+(defvar project-persist-current-project-root-dir)
+
+(defun project-persist-drawer--root ()
+  "Get the root directory if available."
+  (or (and (boundp project-persist-current-project-root-dir)
+           project-persist-current-project-root-dir)
+      default-directory))
+
 (defun project-persist-drawer-open ()
+  "Open the project drawer."
   (interactive)
   (let ((project-root project-persist-current-project-root-dir))
     (setq default-directory project-root)
-    (project-persist-drawer--before-open project-root)
-    (project-persist-drawer--open project-root)
-    (project-persist-drawer--after-open project-root)))
+    (project-persist-drawer--open project-root)))
 
 (defun project-persist-drawer-close ()
+  "Close the project drawer."
   (interactive)
-    (project-persist-drawer--before-close)
-    (project-persist-drawer--close)
-    (project-persist-drawer--after-close))
+    (project-persist-drawer--close))
 
 (defun project-persist-drawer-toggle ()
+  "Toggle the project drawer."
   (interactive)
   (if (project-persist-drawer--get-window)
       (project-persist-drawer-close)
     (project-persist-drawer-open)))
 
 (defun project-persist-drawer-on ()
-  "Turn on the project-persist drawer."
+  "Turn on opening of the project drawer on project opening."
   (eval-after-load 'project-persist
     '(add-hook 'project-persist-after-load-hook 'project-persist-drawer-open)))
 
 (defun project-persist-drawer-off ()
-  "Turn off the project-persist drawer."
+  "Turn off opening of the project drawer on project opening."
   (eval-after-load 'project-persist
     '(remove-hook 'project-persist-after-load-hook 'project-persist-drawer-open)))
 
