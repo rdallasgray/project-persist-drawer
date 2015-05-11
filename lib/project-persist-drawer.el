@@ -63,6 +63,8 @@
 
 ;;; Code:
 
+(require 'project-persist)
+
 ;;;###autoload
 (define-minor-mode project-persist-drawer-mode
   "Use a project drawer with project-persist."
