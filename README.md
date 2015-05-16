@@ -5,13 +5,13 @@ Use a project drawer with [project-persist](https://github.com/rdallasgray/proje
 In your Emacs configuration:
 ```elisp
 (require 'project-persist-drawer)
-(require 'project-persist-drawer-adaptor-sr-speedbar) ;; or another adaptor
+(require 'ppd-sr-speedbar) ;; or another adaptor
 (project-persist-drawer-mode t)
 ```
 
 ## Adaptors
 At present only one adaptor is available --
-[project-persist-drawer-adaptor-sr-speedbar](https://github.com/rdallasgray/project-persist-drawer-adaptor-sr-speedbar),
+[ppd-sr-speedbar](https://github.com/rdallasgray/ppd-sr-speedbar),
 which uses [sr-speedbar](https://github.com/emacsmirror/sr-speedbar)
 to display the project drawer.
 

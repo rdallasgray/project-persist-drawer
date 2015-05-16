@@ -4,7 +4,7 @@
 ;;
 ;; Author: Robert Dallas Gray <mail@robertdallasgray.com>
 ;; URL: https://github.com/rdallasgray/project-persist-drawer.git
-;; Version: 0.0.1
+;; Version: 0.0.2
 ;; Keywords: defaults
 
 ;; This file is not part of GNU Emacs.
@@ -18,13 +18,13 @@
 ;; In your Emacs configuration:
 ;; ```elisp
 ;; (require 'project-persist-drawer)
-;; (require 'project-persist-drawer-adaptor-sr-speedbar) ;; or another adaptor
+;; (require 'ppd-sr-speedbar) ;; or another adaptor
 ;; (project-persist-drawer-mode t)
 ;; ```
 ;; 
 ;; ## Adaptors
 ;; At present only one adaptor is available --
-;; [project-persist-drawer-adaptor-sr-speedbar](https://github.com/rdallasgray/project-persist-drawer-adaptor-sr-speedbar),
+;; [ppd-sr-speedbar](https://github.com/rdallasgray/ppd-sr-speedbar),
 ;; which uses [sr-speedbar](https://github.com/emacsmirror/sr-speedbar)
 ;; to display the project drawer.
 ;; 
