@@ -82,7 +82,7 @@ or adaptor does not provide this function"))
 (defun project-persist-drawer-close ()
   "Close the project drawer."
   (interactive)
-    (project-persist-drawer--close))
+  (project-persist-drawer--close))
 
 (defun project-persist-drawer-toggle ()
   "Toggle the project drawer."
@@ -100,17 +100,17 @@ or adaptor does not provide this function"))
   "Turn on opening of the project drawer on project opening."
   (eval-after-load 'project-persist
     '(progn
-       '(add-hook 'project-persist-before-load-hook 'project-persist-drawer-try-close)
-       '(add-hook 'project-persist-before-save-hook 'project-persist-drawer-try-close)
-       '(add-hook 'project-persist-after-load-hook 'project-persist-drawer-open))))
+       (add-hook 'project-persist-before-load-hook 'project-persist-drawer-try-close)
+       (add-hook 'project-persist-before-save-hook 'project-persist-drawer-try-close)
+       (add-hook 'project-persist-after-load-hook 'project-persist-drawer-open))))
 
 (defun project-persist-drawer-off ()
   "Turn off opening of the project drawer on project opening."
   (eval-after-load 'project-persist
     '(progn
-       '(remove-hook 'project-persist-before-load-hook 'project-persist-drawer-try-close)
-       '(remove-hook 'project-persist-before-save-hook 'project-persist-drawer-try-close)
-       '(remove-hook 'project-persist-after-load-hook 'project-persist-drawer-open))))
+       (remove-hook 'project-persist-before-load-hook 'project-persist-drawer-try-close)
+       (remove-hook 'project-persist-before-save-hook 'project-persist-drawer-try-close)
+       (remove-hook 'project-persist-after-load-hook 'project-persist-drawer-open))))
 
 (provide 'project-persist-drawer)
 ;;; project-persist-drawer.el ends here
