@@ -76,9 +76,7 @@ or adaptor does not provide this function"))
   "Open the project drawer."
   (interactive)
   (let ((project-root project-persist-current-project-root-dir))
-    (message "project root is %s" project-root)
     (setq default-directory project-root)
-    (message "default-directory is %s" default-directory)
     (project-persist-drawer--open project-root)))
 
 (defun project-persist-drawer-close ()
