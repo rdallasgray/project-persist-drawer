@@ -4,7 +4,7 @@
 ;;
 ;; Author: Robert Dallas Gray <mail@robertdallasgray.com>
 ;; URL: https://github.com/rdallasgray/project-persist-drawer.git
-;; Version: 0.0.2
+;; Version: 0.0.3
 ;; Keywords: defaults
 
 ;; This file is not part of GNU Emacs.
@@ -113,7 +113,7 @@ or adaptor does not provide this function"))
 (defun project-persist-drawer-close ()
   "Close the project drawer."
   (interactive)
-    (project-persist-drawer--close))
+  (project-persist-drawer--close))
 
 (defun project-persist-drawer-toggle ()
   "Toggle the project drawer."
@@ -122,15 +122,26 @@ or adaptor does not provide this function"))
       (project-persist-drawer-close)
     (project-persist-drawer-open)))
 
+(defun project-persist-drawer-try-close()
+  "Close the drawer if it is open."
+  (when (project-persist-drawer--get-window)
+    (project-persist-drawer-close)))
+
 (defun project-persist-drawer-on ()
   "Turn on opening of the project drawer on project opening."
   (eval-after-load 'project-persist
-    '(add-hook 'project-persist-after-load-hook 'project-persist-drawer-open)))
+    '(progn
+       (add-hook 'project-persist-before-save-hook 'project-persist-drawer-try-close)
+       (add-hook 'project-persist-before-load-hook 'project-persist-drawer-try-close)
+       (add-hook 'project-persist-after-load-hook 'project-persist-drawer-open))))
 
 (defun project-persist-drawer-off ()
   "Turn off opening of the project drawer on project opening."
   (eval-after-load 'project-persist
-    '(remove-hook 'project-persist-after-load-hook 'project-persist-drawer-open)))
+    '(progn
+       (remove-hook 'project-persist-before-save-hook 'project-persist-drawer-try-close)
+       (remove-hook 'project-persist-before-load-hook 'project-persist-drawer-try-close)
+       (remove-hook 'project-persist-after-load-hook 'project-persist-drawer-open))))
 
 (provide 'project-persist-drawer)
 ;;; project-persist-drawer.el ends here
