@@ -68,14 +68,14 @@ or adaptor does not provide this function"))
 
 (defun project-persist-drawer--root ()
   "Get the root directory if available."
-  (or (and (boundp project-persist-current-project-root-dir)
+  (or (and (boundp 'project-persist-current-project-root-dir)
            project-persist-current-project-root-dir)
       default-directory))
 
 (defun project-persist-drawer-open ()
   "Open the project drawer."
   (interactive)
-  (let ((project-root project-persist-current-project-root-dir))
+  (let ((project-root (project-persist-drawer--root)))
     (setq default-directory project-root)
     (project-persist-drawer--open project-root)))
 
