@@ -4,7 +4,7 @@
 ;;
 ;; Author: Robert Dallas Gray <mail@robertdallasgray.com>
 ;; URL: https://github.com/rdallasgray/project-persist-drawer.git
-;; Version: 0.0.3
+;; Version: 0.0.4
 ;; Keywords: defaults
 
 ;; This file is not part of GNU Emacs.
@@ -99,16 +99,14 @@ or adaptor does not provide this function"))
 
 (defun project-persist-drawer--root ()
   "Get the root directory if available."
-  (or (and (boundp project-persist-current-project-root-dir)
+  (or (and (boundp 'project-persist-current-project-root-dir)
            project-persist-current-project-root-dir)
       default-directory))
 
 (defun project-persist-drawer-open ()
   "Open the project drawer."
   (interactive)
-  (let ((project-root project-persist-current-project-root-dir))
-    (setq default-directory project-root)
-    (project-persist-drawer--open project-root)))
+  (project-persist-drawer--open (project-persist-drawer--root)))
 
 (defun project-persist-drawer-close ()
   "Close the project drawer."
