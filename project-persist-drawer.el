@@ -75,9 +75,7 @@ or adaptor does not provide this function"))
 (defun project-persist-drawer-open ()
   "Open the project drawer."
   (interactive)
-  (let ((project-root (project-persist-drawer--root)))
-    (setq default-directory project-root)
-    (project-persist-drawer--open project-root)))
+  (project-persist-drawer--open (project-persist-drawer--root)))
 
 (defun project-persist-drawer-close ()
   "Close the project drawer."
